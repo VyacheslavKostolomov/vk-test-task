@@ -3,9 +3,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: 30px;
+  row-gap: 80px;
+  padding: 60px 0;
+}
+
+.age-form__input {
+  width: 200px;
+  height: 40px;
+  padding: 0 15px;
 }
 
 .age-form__textarea {
+  font-size: 22px;
+  text-align: center;
   resize: none;
 }
