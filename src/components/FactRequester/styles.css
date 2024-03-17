@@ -1,0 +1,12 @@
+.fact-requester {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  row-gap: 50px;
+  padding: 50px 0;
+}
+
+.fact-requester__textarea {
+  resize: none;
+}
