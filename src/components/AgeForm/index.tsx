@@ -23,7 +23,7 @@ const AgeForm = () => {
   });
 
   const submit = (data: IFormData) => {
-    if (!isWaiting && data.name !== lastSearchedValue) {
+    if (isValid && !isWaiting && data.name !== lastSearchedValue) {
       setIsWaiting(true);
       setLastSearchedValue(data.name);
       api
@@ -39,7 +39,7 @@ const AgeForm = () => {
   const debouncedValue = useDebounce<string>(searchValue);
 
   useEffect(() => {
-    if (!isWaiting && searchValue !== lastSearchedValue) {
+    if (isValid && !isWaiting && searchValue !== lastSearchedValue) {
       setIsWaiting(true);
       setLastSearchedValue(searchValue);
       api
@@ -55,23 +55,29 @@ const AgeForm = () => {
   return (
     <form className="age-form" onSubmit={handleSubmit(submit)}>
       <input
+        className="age-form__input"
         type="text"
         placeholder="Введите имя"
         {...register("name", {
-          required: "Пожалуйста, введите имя...",
-          pattern: /[a-zA-Z]/,
+          required: "Нужно ввести имя...",
+          pattern: /^[a-zA-Z]+$/,
           onChange: (e) => {
             if (isDirty && isValid) setSearchValue(e.target.value);
           },
         })}
       />
-      <Button type="submit" loading={isWaiting} disabled={!isDirty || !isValid}>
+      <Button
+        type="submit"
+        size="l"
+        loading={isWaiting}
+        disabled={!isValid || searchValue === lastSearchedValue}
+      >
         Узнать возраст
       </Button>
       <textarea
         className="age-form__textarea"
         defaultValue={age}
-        rows={10}
+        rows={2}
         cols={15}
       />
     </form>
