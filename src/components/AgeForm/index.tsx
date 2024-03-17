@@ -28,7 +28,10 @@ const AgeForm = () => {
       setLastSearchedValue(data.name);
       api
         .getAge(data.name)
-        .then((res) => setAge(res.age))
+        .then((response) => setAge(response.age))
+        .catch((error) =>
+          console.log("Что-то пошло не так! Попробуйте еще раз...", error)
+        )
         .finally(() => setIsWaiting(false));
     }
   };
@@ -36,12 +39,15 @@ const AgeForm = () => {
   const debouncedValue = useDebounce<string>(searchValue);
 
   useEffect(() => {
-    if (!isWaiting && lastSearchedValue !== searchValue) {
+    if (!isWaiting && searchValue !== lastSearchedValue) {
       setIsWaiting(true);
       setLastSearchedValue(searchValue);
       api
         .getAge(searchValue)
         .then((response) => setAge(response.age))
+        .catch((error) =>
+          console.log("Что-то пошло не так! Попробуйте еще раз...", error)
+        )
         .finally(() => setIsWaiting(false));
     }
   }, [debouncedValue]);
